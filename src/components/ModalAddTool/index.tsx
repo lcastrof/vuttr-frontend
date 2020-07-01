@@ -27,8 +27,9 @@ const ModalAddTool: React.FC<ModalProps> = ({
   handleAddTool,
 }) => {
   const handleSubmit = useCallback(
-    async (data: CreateToolData) => {
-      handleAddTool(data);
+    async (data) => {
+      const tags = data.tags.split(' ');
+      handleAddTool({ ...data, tags });
 
       setIsOpen();
     },
@@ -45,22 +46,22 @@ const ModalAddTool: React.FC<ModalProps> = ({
 
         <Section>
           <h2>Tool Name</h2>
-          <Input name="name" />
+          <Input required name="title" />
         </Section>
 
         <Section>
           <h2>Tool Link</h2>
-          <Input name="link" />
+          <Input required name="link" />
         </Section>
 
         <Section>
           <h2>Tool Description</h2>
-          <Input isTextArea name="description" />
+          <Input required isTextArea name="description" />
         </Section>
 
         <Section>
           <h2>Tags</h2>
-          <Input name="tags" />
+          <Input required name="tags" />
         </Section>
 
         <div id="buttons">

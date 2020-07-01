@@ -43,10 +43,10 @@ const Input: React.FC<InputProps> = ({
   useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef.current,
+      ref: isTextArea ? textRef.current : inputRef.current,
       path: 'value',
     });
-  }, [fieldName, registerField]);
+  }, [fieldName, registerField, isTextArea]);
 
   return (
     <>

@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen }) => {
           bottom: 'auto',
           marginRight: '-50%',
           transform: 'translate(-50%, -50%)',
-          width: '700px',
+          width: '500px',
           borderRadius: '10px',
           border: 'none',
           color: '#000000',

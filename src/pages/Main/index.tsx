@@ -48,9 +48,16 @@ const Main: React.FC = () => {
     loadTools();
   }, []);
 
-  const handleSubmit = useCallback((data: object): void => {
-    console.log(data);
-  }, []);
+  const handleSubmit = useCallback(
+    async (tool: string): Promise<void> => {
+      const result = checked
+        ? await api.get(`/tools?tags_like=${tool.search}`)
+        : await api.get(`/tools?q=${tool.search}`);
+
+      setTools(result.data);
+    },
+    [checked],
+  );
 
   const handleChange = useCallback(() => {
     setChecked(!checked);
@@ -64,13 +71,30 @@ const Main: React.FC = () => {
     setRemoveOpen(!removeOpen);
   }, [removeOpen]);
 
-  const handleAddTool = useCallback(() => {
-    console.log('ok');
-  }, []);
+  const handleAddTool = useCallback(
+    async (tool: Omit<ToolData, 'id'>): Promise<void> => {
+      const { title, link, description, tags } = tool;
 
-  const handleRemoveTool = useCallback((id: number) => {
-    console.log('ok');
-  }, []);
+      const { data: newTool } = await api.post('/tools', {
+        title,
+        link,
+        description,
+        tags,
+      });
+
+      setTools([...tools, newTool]);
+    },
+    [tools],
+  );
+
+  const handleRemoveTool = useCallback(
+    async (id: number): Promise<void> => {
+      await api.delete(`/tools/${id}`);
+
+      setTools(tools.filter((tool) => tool.id !== id));
+    },
+    [tools],
+  );
 
   return (
     <>
