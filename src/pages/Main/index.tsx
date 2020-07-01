@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FiBookmark, FiSearch, FiPlus, FiX } from 'react-icons/fi';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Form } from '@unform/web';
@@ -21,10 +21,32 @@ import {
   Tags,
 } from './styles';
 
+import api from '../../services/api';
+
+interface ToolData {
+  id: number;
+  title: string;
+  link: string;
+  description: string;
+  tags: string[];
+}
+
 const Main: React.FC = () => {
+  const [tools, setTools] = useState<ToolData[]>([]);
+  const [selectedTool, setSelectedTool] = useState<number>(0);
   const [checked, setChecked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [removeOpen, setRemoveOpen] = useState(true);
+  const [removeOpen, setRemoveOpen] = useState(false);
+
+  useEffect(() => {
+    async function loadTools(): Promise<void> {
+      const { data } = await api.get('/tools');
+
+      setTools(data);
+    }
+
+    loadTools();
+  }, []);
 
   const handleSubmit = useCallback((data: object): void => {
     console.log(data);
@@ -46,7 +68,7 @@ const Main: React.FC = () => {
     console.log('ok');
   }, []);
 
-  const handleRemoveTool = useCallback(() => {
+  const handleRemoveTool = useCallback((id: number) => {
     console.log('ok');
   }, []);
 
@@ -61,6 +83,7 @@ const Main: React.FC = () => {
           <span>Very Usefull Tools to Remember</span>
         </HeaderContent>
       </Header>
+
       <ModalAddTool
         isOpen={modalOpen}
         setIsOpen={toggleModal}
@@ -70,7 +93,9 @@ const Main: React.FC = () => {
         isOpen={removeOpen}
         setIsOpen={toggleRemoveConfirmation}
         handleRemove={handleRemoveTool}
+        selectedTool={selectedTool}
       />
+
       <MainContent>
         <InitialBar>
           <div id="search">
@@ -92,68 +117,26 @@ const Main: React.FC = () => {
           </Button>
         </InitialBar>
 
-        <Card>
-          <div id="card-header">
-            <a
-              href="https://notion.so"
-              id="title"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Notion
-            </a>
-            <Delete onClick={toggleRemoveConfirmation}>
-              <FiX />
-            </Delete>
-          </div>
-          <p>
-            All in one tool to organize teams and ideas. Write, plan,
-            collaborate, and get organized.
-          </p>
-          <Tags>#organization #planning #collaboration #writing #calendar</Tags>
-        </Card>
-
-        <Card>
-          <div id="card-header">
-            <a
-              href="https://notion.so"
-              id="title"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Notion
-            </a>
-            <Delete onClick={toggleRemoveConfirmation}>
-              <FiX />
-            </Delete>
-          </div>
-          <p>
-            All in one tool to organize teams and ideas. Write, plan,
-            collaborate, and get organized.
-          </p>
-          <Tags>#organization #planning #collaboration #writing #calendar</Tags>
-        </Card>
-
-        <Card>
-          <div id="card-header">
-            <a
-              href="https://notion.so"
-              id="title"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Notion
-            </a>
-            <Delete onClick={toggleRemoveConfirmation}>
-              <FiX />
-            </Delete>
-          </div>
-          <p>
-            All in one tool to organize teams and ideas. Write, plan,
-            collaborate, and get organized.
-          </p>
-          <Tags>#organization #planning #collaboration #writing #calendar</Tags>
-        </Card>
+        {tools &&
+          tools.map((tool) => (
+            <Card key={tool.id}>
+              <div id="card-header">
+                <a href={tool.link} id="title" target="_blank" rel="noreferrer">
+                  {tool.title}
+                </a>
+                <Delete
+                  onClick={() => {
+                    setSelectedTool(tool.id);
+                    toggleRemoveConfirmation();
+                  }}
+                >
+                  <FiX />
+                </Delete>
+              </div>
+              <p>{tool.description}</p>
+              <Tags>{tool.tags.map((tag) => `#${tag}  `)}</Tags>
+            </Card>
+          ))}
       </MainContent>
     </>
   );

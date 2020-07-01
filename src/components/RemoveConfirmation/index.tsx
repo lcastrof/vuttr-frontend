@@ -10,19 +10,21 @@ import { Content } from './styles';
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  handleRemove: () => void;
+  handleRemove: (id: number) => void;
+  selectedTool: number;
 }
 
 const RemoveConfirmation: React.FC<ModalProps> = ({
   isOpen,
   setIsOpen,
   handleRemove,
+  selectedTool,
 }) => {
   const handleConfirmation = useCallback(async () => {
-    handleRemove();
+    handleRemove(selectedTool);
 
     setIsOpen();
-  }, [handleRemove, setIsOpen]);
+  }, [handleRemove, setIsOpen, selectedTool]);
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>

@@ -34,7 +34,7 @@ export const MainContent = styled.div`
   max-width: 840px;
   margin: 0 auto;
   margin-top: 15px;
-  padding: 0 20px;
+  padding: 20px;
 `;
 
 export const InitialBar = styled.div`
