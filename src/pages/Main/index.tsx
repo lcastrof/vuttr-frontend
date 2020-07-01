@@ -1,6 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { FiBookmark, FiSearch } from 'react-icons/fi';
+import { FiBookmark, FiSearch, FiPlus, FiX } from 'react-icons/fi';
 import Checkbox from '@material-ui/core/Checkbox';
+import { Form } from '@unform/web';
+
+import ModalAddTool from '../../components/ModalAddTool';
 
 import Input from '../../components/Input';
 import SearchButton from '../../components/SearchButton';
@@ -12,15 +15,34 @@ import {
   Title,
   MainContent,
   InitialBar,
-  OptionSelect,
+  Card,
+  Delete,
+  Tags,
 } from './styles';
 
 const Main: React.FC = () => {
   const [checked, setChecked] = useState(false);
+  const [modalOpen, setModalOpen] = useState(true);
+
+  const handleSubmit = useCallback((data: object): void => {
+    console.log(data);
+  }, []);
 
   const handleChange = useCallback(() => {
     setChecked(!checked);
   }, [checked]);
+
+  const handleDelete = useCallback(() => {
+    setChecked(!checked);
+  }, [checked]);
+
+  const toggleModal = useCallback(() => {
+    setModalOpen(!modalOpen);
+  }, [modalOpen]);
+
+  const handleAddTool = useCallback(() => {
+    console.log('ok');
+  }, []);
 
   return (
     <>
@@ -33,18 +55,94 @@ const Main: React.FC = () => {
           <span>Very Usefull Tools to Remember</span>
         </HeaderContent>
       </Header>
+      <ModalAddTool
+        isOpen={modalOpen}
+        setIsOpen={toggleModal}
+        handleAddTool={handleAddTool}
+      />
       <MainContent>
         <InitialBar>
-          <Input name="search" placeholder="Search for tool" icon={FiSearch} />
-          <SearchButton>Search</SearchButton>
+          <div id="search">
+            <Form onSubmit={handleSubmit}>
+              <Input
+                name="search"
+                placeholder="Search for tool"
+                icon={FiSearch}
+              />
+              <SearchButton>Search</SearchButton>
+            </Form>
 
-          <OptionSelect>
             <Checkbox checked={checked} onChange={handleChange} />
             <p>search in tags only</p>
-          </OptionSelect>
+          </div>
 
-          <Button>Adicionar</Button>
+          <Button icon={FiPlus} background="#12db89" onClick={toggleModal}>
+            Add
+          </Button>
         </InitialBar>
+
+        <Card>
+          <div id="card-header">
+            <a
+              href="https://notion.so"
+              id="title"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Notion
+            </a>
+            <Delete onClick={handleDelete}>
+              <FiX />
+            </Delete>
+          </div>
+          <p>
+            All in one tool to organize teams and ideas. Write, plan,
+            collaborate, and get organized.
+          </p>
+          <Tags>#organization #planning #collaboration #writing #calendar</Tags>
+        </Card>
+
+        <Card>
+          <div id="card-header">
+            <a
+              href="https://notion.so"
+              id="title"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Notion
+            </a>
+            <Delete onClick={handleDelete}>
+              <FiX />
+            </Delete>
+          </div>
+          <p>
+            All in one tool to organize teams and ideas. Write, plan,
+            collaborate, and get organized.
+          </p>
+          <Tags>#organization #planning #collaboration #writing #calendar</Tags>
+        </Card>
+
+        <Card>
+          <div id="card-header">
+            <a
+              href="https://notion.so"
+              id="title"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Notion
+            </a>
+            <Delete onClick={handleDelete}>
+              <FiX />
+            </Delete>
+          </div>
+          <p>
+            All in one tool to organize teams and ideas. Write, plan,
+            collaborate, and get organized.
+          </p>
+          <Tags>#organization #planning #collaboration #writing #calendar</Tags>
+        </Card>
       </MainContent>
     </>
   );

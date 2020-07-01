@@ -1,12 +1,22 @@
 import React, { ButtonHTMLAttributes } from 'react';
+import { IconBaseProps } from 'react-icons';
 
 import { Container } from './styles';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: React.ComponentType<IconBaseProps>;
+  background: string;
+}
 
-const Button: React.FC<ButtonProps> = ({ children, ...rest }) => {
+const Button: React.FC<ButtonProps> = ({
+  children,
+  icon: Icon,
+  background,
+  ...rest
+}) => {
   return (
-    <Container type="button" {...rest}>
+    <Container type="button" background={background} {...rest}>
+      {Icon && <Icon size={18} color="#fff" />}
       {children}
     </Container>
   );

@@ -1,15 +1,34 @@
 import styled from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.button`
-  background: #244aa8;
-  border-radius: 0 5px 5px 0;
+interface ContainerProps {
+  background: string;
+}
+
+function darkenBackgroundColor(background: string): string {
+  return shade(0.2, background);
+}
+
+export const Container = styled.button<ContainerProps>`
+  background: ${(props) => props.background};
+  border-radius: 10px;
   border: 0;
-  padding: 0 16px;
+
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.25);
+
+  height: 30px;
+  padding: 5px 10px;
   color: #fff;
   transition: background-color 0.2s;
 
+  display: flex;
+  align-items: center;
+
   &:hover {
-    background: ${shade(0.2, '#244aa8')};
+    background: ${(props) => darkenBackgroundColor(props.background)};
+  }
+
+  > svg {
+    margin-right: 5px;
   }
 `;

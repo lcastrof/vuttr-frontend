@@ -17,7 +17,7 @@ export const HeaderContent = styled.div`
 export const Header = styled.div`
   height: 144px;
   background: #cc4c4c;
-  box-shadow: 1px 1px 15px grey;
+  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.25);
 `;
 
 export const Title = styled.div`
@@ -39,13 +39,70 @@ export const MainContent = styled.div`
 
 export const InitialBar = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 21px;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    form {
+      display: flex;
+    }
+
+    p {
+      color: #454545;
+    }
+  }
 `;
 
-export const OptionSelect = styled.div`
+export const Card = styled.div`
+  background-color: #ffff;
+  padding: 15px;
+  border-radius: 10px;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.25);
+
+  & + div {
+    margin-top: 21px;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+
+    a#title {
+      text-decoration: underline;
+      color: #244aa8;
+      font-size: 24px;
+
+      margin-bottom: 11px;
+    }
+  }
+
+  p {
+    color: #575757;
+    font-size: 16px;
+
+    margin-bottom: 11px;
+  }
+`;
+
+export const Delete = styled.a`
+  color: #575757;
+  opacity: 90%;
+
+  cursor: pointer;
+`;
+
+export const Tags = styled.div`
   display: flex;
   align-items: center;
 
-  p {
-    color: #454545;
-  }
+  color: black;
 `;
