@@ -4,6 +4,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Form } from '@unform/web';
 
 import ModalAddTool from '../../components/ModalAddTool';
+import RemoveConfirmation from '../../components/RemoveConfirmation';
 
 import Input from '../../components/Input';
 import SearchButton from '../../components/SearchButton';
@@ -22,7 +23,8 @@ import {
 
 const Main: React.FC = () => {
   const [checked, setChecked] = useState(false);
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [removeOpen, setRemoveOpen] = useState(true);
 
   const handleSubmit = useCallback((data: object): void => {
     console.log(data);
@@ -32,15 +34,19 @@ const Main: React.FC = () => {
     setChecked(!checked);
   }, [checked]);
 
-  const handleDelete = useCallback(() => {
-    setChecked(!checked);
-  }, [checked]);
-
   const toggleModal = useCallback(() => {
     setModalOpen(!modalOpen);
   }, [modalOpen]);
 
+  const toggleRemoveConfirmation = useCallback(() => {
+    setRemoveOpen(!removeOpen);
+  }, [removeOpen]);
+
   const handleAddTool = useCallback(() => {
+    console.log('ok');
+  }, []);
+
+  const handleRemoveTool = useCallback(() => {
     console.log('ok');
   }, []);
 
@@ -59,6 +65,11 @@ const Main: React.FC = () => {
         isOpen={modalOpen}
         setIsOpen={toggleModal}
         handleAddTool={handleAddTool}
+      />
+      <RemoveConfirmation
+        isOpen={removeOpen}
+        setIsOpen={toggleRemoveConfirmation}
+        handleRemove={handleRemoveTool}
       />
       <MainContent>
         <InitialBar>
@@ -91,7 +102,7 @@ const Main: React.FC = () => {
             >
               Notion
             </a>
-            <Delete onClick={handleDelete}>
+            <Delete onClick={toggleRemoveConfirmation}>
               <FiX />
             </Delete>
           </div>
@@ -112,7 +123,7 @@ const Main: React.FC = () => {
             >
               Notion
             </a>
-            <Delete onClick={handleDelete}>
+            <Delete onClick={toggleRemoveConfirmation}>
               <FiX />
             </Delete>
           </div>
@@ -133,7 +144,7 @@ const Main: React.FC = () => {
             >
               Notion
             </a>
-            <Delete onClick={handleDelete}>
+            <Delete onClick={toggleRemoveConfirmation}>
               <FiX />
             </Delete>
           </div>
