@@ -31,9 +31,14 @@ interface ToolData {
   tags: string[];
 }
 
+interface Nani {
+  id: number;
+  title: string;
+}
+
 const Main: React.FC = () => {
   const [tools, setTools] = useState<ToolData[]>([]);
-  const [selectedTool, setSelectedTool] = useState<number>(0);
+  const [selectedTool, setSelectedTool] = useState({ id: 0, title: '' });
   const [checked, setChecked] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [removeOpen, setRemoveOpen] = useState(false);
@@ -150,7 +155,7 @@ const Main: React.FC = () => {
                 </a>
                 <Delete
                   onClick={() => {
-                    setSelectedTool(tool.id);
+                    setSelectedTool({ id: tool.id, title: tool.title });
                     toggleRemoveConfirmation();
                   }}
                 >

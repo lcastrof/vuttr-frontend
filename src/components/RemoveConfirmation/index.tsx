@@ -11,7 +11,10 @@ interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
   handleRemove: (id: number) => void;
-  selectedTool: number;
+  selectedTool: {
+    id: number;
+    title: string;
+  };
 }
 
 const RemoveConfirmation: React.FC<ModalProps> = ({
@@ -21,7 +24,7 @@ const RemoveConfirmation: React.FC<ModalProps> = ({
   selectedTool,
 }) => {
   const handleConfirmation = useCallback(async () => {
-    handleRemove(selectedTool);
+    handleRemove(selectedTool.id);
 
     setIsOpen();
   }, [handleRemove, setIsOpen, selectedTool]);
@@ -35,7 +38,7 @@ const RemoveConfirmation: React.FC<ModalProps> = ({
         </header>
 
         <p>
-          Are you sure you want to remove <strong>Notion</strong>?
+          Are you sure you want to remove <strong>{selectedTool.title}</strong>?
         </p>
 
         <div id="buttons">
