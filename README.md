@@ -5,8 +5,8 @@
 ## 📷 Preview
 
 <img width="100%" src="./screenshots/MainPage.png">
-<img width="49.6%" src="./screenshots/AddModal.png">
-<img width="49.6%" src="./screenshots/RemoveConfirmation.png">
+<img width="100%" src="./screenshots/AddModal.png">
+<img width="100%" src="./screenshots/RemoveConfirmation.png">
 
 ---
 
