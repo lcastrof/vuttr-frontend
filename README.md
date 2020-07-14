@@ -39,7 +39,7 @@ $ git clone https://github.com/lcastrof/vuttr-frontend
 # Access directory
 $ cd vuttr-frontend
 
-# Install dependencies
+# Install the dependencies
 $ yarn install
 ```
 
